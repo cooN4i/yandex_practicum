@@ -1,21 +1,27 @@
-# 138885766
+# 138906562
 from sys import stdin
 
 
 def solution(robots: list[int], limit: int) -> int:
+    '''Функция для решения задачи.
+    
+    Вычисляет минимальное количество транспортных
+    платформ для перевозки роботов.
+    '''
+    robots = sorted(robots)
     platforms: int = 0
-    left: int = 0
-    right: int = len(robots) - 1
-    while (left <= right):
-        if robots[left] + robots[right] <= limit:
-            left += 1
+    lightest: int = 0
+    heaviest: int = len(robots) - 1
+    while lightest <= heaviest:
+        if robots[lightest] + robots[heaviest] <= limit:
+            lightest += 1
         platforms += 1
-        right -= 1
+        heaviest -= 1
     return platforms
 
 
 def main() -> None:
-    robots: list = sorted(list(map(int, stdin.readline().strip().split())))
+    robots: list = [int(i) for i in stdin.readline().strip().split()]
     limit: int = int(input())
     print(solution(robots, limit))
 
