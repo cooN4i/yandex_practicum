@@ -3,11 +3,11 @@ from sys import stdin
 
 
 def solution(robots: list[int], limit: int) -> int:
-    '''Функция для решения задачи.
+    """Функция для решения задачи.
     
     Вычисляет минимальное количество транспортных
     платформ для перевозки роботов.
-    '''
+    """
     robots = sorted(robots)
     platforms: int = 0
     lightest: int = 0
