@@ -1,21 +1,20 @@
-# 139337323
+# 139338251
 
 from sys import stdin
 from string import digits
 
-
-DIGITS = set(digits)
+DIGITS: set = set(digits)
 
 
 def decode_instructions(message: str) -> str:
     """Основная функция для решения задачи."""
-    stack = []
-    current_num_str = ''
-    current_str = ''
+    stack: list = []
+    current_num_str: str = ''
+    current_str: str = ''
 
     for symbol in message:
         if symbol == '[':
-            num = int(current_num_str)
+            num: int = int(current_num_str)
             stack.append((current_str, num))
             current_str = ''
             current_num_str = ''
@@ -31,7 +30,7 @@ def decode_instructions(message: str) -> str:
 
 
 def main() -> None:
-    message = stdin.readline().strip()
+    message: str = stdin.readline().strip()
     print(decode_instructions(message))
 
 
