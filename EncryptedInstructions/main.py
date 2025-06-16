@@ -8,7 +8,7 @@ DIGITS = set(digits)
 
 
 def decode_instructions(message: str) -> str:
-    """    Основная функция для решения задачи.    """
+    """Основная функция для решения задачи."""
     stack = []
     current_num_str = ''
     current_str = ''
