@@ -1,37 +1,29 @@
-# 139335609
+# 139337323
 
 from sys import stdin
+from string import digits
 
 
-class Stack:
-    """Простой стек на базе списка."""
-
-    def __init__(self):
-        self.items = []
-
-    def push(self, item: tuple):
-        self.items.append(item)
-
-    def pop(self):
-        return self.items.pop()
+DIGITS = set(digits)
 
 
 def decode_instructions(message: str) -> str:
-    """Основная функция для решения задачи на основе стека."""
-    stack: Stack = Stack()
-    current_num: int = 0
-    current_str: str = ''
+    """    Основная функция для решения задачи.    """
+    stack = []
+    current_num_str = ''
+    current_str = ''
 
     for symbol in message:
-        if symbol.isdigit():
-            current_num = current_num * 10 + int(symbol)
-        elif symbol == '[':
-            stack.push((current_str, current_num))
+        if symbol == '[':
+            num = int(current_num_str)
+            stack.append((current_str, num))
             current_str = ''
-            current_num = 0
+            current_num_str = ''
         elif symbol == ']':
             prev_str, num = stack.pop()
             current_str = prev_str + current_str * num
+        elif symbol in DIGITS:
+            current_num_str += symbol
         else:
             current_str += symbol
 
@@ -39,7 +31,7 @@ def decode_instructions(message: str) -> str:
 
 
 def main() -> None:
-    message: str = stdin.readline().strip()
+    message = stdin.readline().strip()
     print(decode_instructions(message))
 
 
