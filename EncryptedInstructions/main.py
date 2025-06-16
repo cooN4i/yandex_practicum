@@ -1,40 +1,47 @@
-# 139247977
+# 139335609
+
 from sys import stdin
 
 
-def solve_task(message: str) -> str:
-    """Основная функция для решения задачи.
+class Stack:
+    """Простой стек на базе списка."""
 
-    Функция, начиная с конца сообщения, ищет пары открывающих и закрывающих
-    скобок. Затем, если такие в сообщении имеются, она считывает число, стоящее
-    перед открывающей скобкой, умножает его на команды, заключенные в скобках,
-    и вставляет полученный фрагмент обратно в сообщение."""
-    closing_bracket_index: int = 0
-    opening_bracket_index: int = 0
-    while '[' in message:
-        index: int = len(message) - 1
-        while message[index] != '[':
-            if message[index] == ']':
-                closing_bracket_index = index
-            index -= 1
-        opening_bracket_index = index
-        commands_for_multiplication: str = message[opening_bracket_index +
-                                                   1:closing_bracket_index]
-        multiplier: str = ''
-        index -= 1
-        while message[index].isdigit():
-            multiplier = message[index] + multiplier
-            index -= 1
-        commands_for_multiplication *= int(multiplier)
-        message = message[:index + 1] + commands_for_multiplication + \
-            message[closing_bracket_index + 1:]
-    return message
+    def __init__(self):
+        self.items = []
+
+    def push(self, item: tuple):
+        self.items.append(item)
+
+    def pop(self):
+        return self.items.pop()
+
+
+def decode_instructions(message: str) -> str:
+    """Основная функция для решения задачи на основе стека."""
+    stack: Stack = Stack()
+    current_num: int = 0
+    current_str: str = ''
+
+    for symbol in message:
+        if symbol.isdigit():
+            current_num = current_num * 10 + int(symbol)
+        elif symbol == '[':
+            stack.push((current_str, current_num))
+            current_str = ''
+            current_num = 0
+        elif symbol == ']':
+            prev_str, num = stack.pop()
+            current_str = prev_str + current_str * num
+        else:
+            current_str += symbol
+
+    return current_str
 
 
 def main() -> None:
     message: str = stdin.readline().strip()
-    print(solve_task(message))
+    print(decode_instructions(message))
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
